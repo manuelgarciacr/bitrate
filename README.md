@@ -23,6 +23,7 @@ set -g @tmux2k-bitrate-devices "eno1 wlp3s0 unknown"     # If not set, all devic
 # set -g @tmux2k-bitrate-ethernet-icon                  # ethernet icon. Default 󰈀
 # set -g @tmux2k-bitrate-wifi-icon 󰖩                     # wifi icon. Default 
 # set -g @tmux2k-bitrate-essid true                      # If true, the ESSID is displayed
+# set -g @tmux2k-bitrate-no-names true                   # If true, the names are not displayed
 set -g @plugin '2kabhishek/tmux2k'
 
 # ...

@@ -6,12 +6,16 @@ source "$current_dir/../lib/utils.sh"
 lan_icon=$(get_tmux_option "@tmux2k-bitrate-ethernet-icon" "󰈀")
 wifi_icon=$(get_tmux_option "@tmux2k-bitrate-wifi-icon" "")
 essid=$(get_tmux_option "@tmux2k-bitrate-essid" "false")
+no_names=$(get_tmux_option "@tmux2k-bitrate-no-names" "false")
 filteredInterfaces=$(get_tmux_option "@tmux2k-bitrate-devices" "")
 
 space=$(echo -e "\u2800")
 
 if [ "$essid" != "true" ]; then
     essid="false"
+fi
+if [ "$no_names" != "true" ]; then
+    no_names="false"
 fi
 
 get_lan() {
@@ -44,13 +48,20 @@ get_lan() {
         local DATA="$DATA $PREVIOUS_BITRATE"
         
         # DEVICE data
-        
+   
+        if [[ "$no_names" == "true" ]]; then
+            DEVICE=""
+        else
+        	DEVICE="$DEVICE:"
+        fi
+
         if [ -n "$DATA" ]; then 
-            DATA=$(printf '%s' "$lan_icon $DEVICE:$DATA")
+            DATA=$(printf '%s' "$lan_icon $DEVICE$DATA")
         else
             DATA=$(printf '%s' "$lan_icon $DEVICE")
         fi
-        if [ -n "$OUTPUT" ]; then 
+
+		if [ -n "$OUTPUT" ]; then 
             OUTPUT="$OUTPUT $DATA"
         else
             OUTPUT="$DATA"
@@ -101,11 +112,18 @@ get_wifi() {
         
         # DEVICE data
         
+        if [[ "$no_names" == "true" ]]; then
+            DEVICE=""
+        else
+        	DEVICE="$DEVICE:"
+        fi
+
         if [ -n "$DATA" ]; then 
-            DATA=$(printf '%s' "$wifi_icon $space$DEVICE:$DATA")
+            DATA=$(printf '%s' "$wifi_icon $space$DEVICE$DATA")
         else
             DATA=$(printf '%s' "$wifi_icon $space$DEVICE")
         fi
+
         if [ -n "$OUTPUT" ]; then 
             OUTPUT="$OUTPUT $DATA"
         else
